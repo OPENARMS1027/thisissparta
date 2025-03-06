@@ -12,15 +12,16 @@ for tc in range(1,1+T):
     for i in range(N):
         show_money += farm[i][N // 2] # 중간 값 더해주기
         # 양쪽 값 더해주기
-        for k in range(i+1):
-            if 0 < k <= N//2:
-                money = farm[i][(N//2)-k] + farm[i][(N//2)+k]
-                show_money += money
+        if i <= (N // 2):
+            for k in range(i+1):
+                if 0 < k <= N//2:
+                    money = farm[i][(N//2)-k] + farm[i][(N//2)+k]
+                    show_money += money
 
         if i > (N // 2):  # 가장 긴 중간 지점을 넘어 갔을 때
             for a in range(N-i):
                 if 0 < a:
-                    money = farm[i][N-k] + farm[i][N-k]
+                    money = farm[i][N//2-(N//2-a)] + farm[i][N//2+(N//2-a)]
                     show_money += money
 
     print(f"#{tc} {show_money}")
