@@ -1,6 +1,10 @@
 # 교착은 아래위로만 판단
 # 남아있는 테이블 교착상태 반환
 # 1은 N극 2는 S극
+# 위가 N극이고 밑이 S극이기 때문에 N 자성체가 먼저 위에 나오고 S 자성체가 아래 나오면 교착이 생성된다.
+# 따라서 짝을 이루기 때문에 True, False를 이용해서 자성체가 나오는 것을 확인해 줌
+# N 자성체가 나오면 False로 먼저 설정, 그리고 S 자성체가 나오면 True로 변경 후 카운트
+#
 
 for tc in range(1,11):
     N = int(input()) # 항상 100, 정사각형 테이블의 한 변의 길이
@@ -8,31 +12,15 @@ for tc in range(1,11):
 
     counts = 0 # 교착 상태 세어 줄 변수
     # 항상 변의 길이가 100인 정사각형 테이블에서
-    for j in range(100):
-        s_j = 0 # s인 j값
-        n_j = 0 # n인 j값
-        queue_s = []
-        queue_n = []
+    for c in range(100):
 
-        for i in range(100):
-            # 세로의 형태만 고려해준다.
-            if arr[i][j] == 2:
-                s_j = j
-                queue_n.append(s_j)
-            elif arr[i][j] == 1:
-                n_j = j
-                queue_s.append(n_j)
-
-        # 두 개의 큐중 더 짧은 것 길이 기준으로 비교
-        if len(queue_s) > len(queue_n):
-            for i in range(len(queue_n)):
-                if queue_s[0] > queue_n[0]:
-                    counts += 1
-        else:
-            for i in range(len(queue_s)):
-                if queue_s.pop(0) > queue_n.pop(0):
-                    counts += 1
-
-
+        check_n = False # 자성체가 쌍을 이뤄 교착하는 것을 확인하기 위함
+        for r in range(100): # 세로로만 봐주기 때문에 열은 그대로고 행을 변화시키며 탐색
+            if arr[r][c] == 1: # N을 만나면
+                check_n = True # 체크
+            elif arr[r][c] == 2: # S를 만나면
+                if check_n: # N이 앞에 있었다면
+                    counts += 1 # 카운트 해준 뒤
+                    check_n = False # 다시 짝을 맞추기 위해 초기화 해준다.
 
     print(f"#{tc} {counts}")
