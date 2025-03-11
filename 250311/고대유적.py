@@ -19,34 +19,44 @@ for tc in range(1,1+T):
     # 행별 탐색
     for r in range(N):
         start = False # 구조물 탐색 알림
+        len_structure = 0
         for c in range(M):
-            len_structure = 0
             if picture[r][c] == 1: # 구조물 있다면
                 len_structure += 1 # 길이에 추가
-                start = True # 세기 시작 알림
-            elif picture[r][c] == 0 and start:
-                start = False
-                len_structure = 0
-
+                start = True # 구조물이 시작됐음을 갱신
+                # 사진 끝자락까지 구조물이 있을 때 최대값 비교 후 해당하면 갱신
+                if c == M-1: # 구조물 탐색하던 중 사진 끝자락이면
+                    if max_len_structure < len_structure:
+                        max_len_structure = len_structure 
+            # 구조물이 계속 없었다면 배제
+            elif picture[r][c] == 0 and start: # 구조물이 없다면 start 갱신 해주고
+                start = False # 구조물이 끝났음을 갱신
+                
                 # 구조물 하나의 길이 세기가 끝났을 때 최대값이랑 비교
                 if max_len_structure < len_structure:
                     max_len_structure = len_structure
+                len_structure = 0    
 
     # 열별 탐색
     for c in range(M):
         start = False # 구조물 탐색 알림
+        len_structure = 0
         for r in range(N):
-            len_structure = 0
-            if picture[r][c] == 1:  # 구조물 있다면
+            if picture[r][c] == 1:  # 구조물 있다면    
                 len_structure += 1  # 길이에 추가
-                start = True  # 세기 시작 알림
-            elif picture[r][c] == 0 and start:
-                start = False
-                len_structure = 0
+                start = True # 구조물이 시작됐음을 갱신
+                # 사진 끝자락까지 구조물이 있을 때 최대값 비교 후 해당하면 갱신
+                if r == N-1: # 구조물 탐색하던 중 사진 끝자락이면
+                    if max_len_structure < len_structure:
+                        max_len_structure = len_structure 
+            # 구조물이 계속 없었다면 배제
+            elif picture[r][c] == 0 and start: # 구조물이 없다면 start 갱신 해주고
+                start = False # 구조물이 끝났음을 갱신
 
                 # 구조물 하나의 길이 세기가 끝났을 때 최대값이랑 비교
                 if max_len_structure < len_structure:
                     max_len_structure = len_structure
+                len_structure = 0    
 
     print(f"#{tc} {max_len_structure}")
 
