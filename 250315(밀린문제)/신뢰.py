@@ -36,19 +36,25 @@ for tc in range(1,1+T):
             position_B.pop(0)
             # O 로봇의 위치를 계산
             if position_O:
-                if count >= position_O[0]-cur_O: 
-                    cur_O = position_O[0]
+                if count >= abs(position_O[0]-cur_O): # 둘의 차이를 절댓값 해준 것보다 count가 작다면
+                    cur_O = position_O[0] # 카운트 수보다 덜 움직이기 때문에 그대로 가고가 하는 위치를 재할당
                 else:
-                    cur_O += count
+                    if position_O[0] > cur_O: # 만약 가야하는 위치가 더 크다면
+                        cur_O += count # 카운트만큼 움직여주고
+                    else: # 현재 위치가 더 크다면 돌아가야하기에
+                        cur_O -= count #카운트만큼 빼준다
         elif robot_botton[i*2] == 'O':
             count += abs(int(robot_botton[i*2+1]) - cur_O) + 1
             cur_O = int(robot_botton[i*2+1])
             position_O.pop(0)
             if position_B:
-                if count >= position_B[0]-cur_B:
+                if count >= abs(position_B[0]-cur_B):
                     cur_B = position_B[0]
                 else:
-                    cur_B += count
+                    if position_B[0] > cur_B:
+                        cur_B += count
+                    else:
+                        cur_B -= count
         answer += count          
 
     print(f"#{tc} {answer}")
