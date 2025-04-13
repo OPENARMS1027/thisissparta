@@ -2,23 +2,34 @@ from collections import deque
 import sys
 
 N =int(sys.stdin.readline())
-
+q = deque()
 for i in range(N):
-    input_value = sys.stdin.realine().split()
+    input_value = sys.stdin.readline().split()
     command = input_value[0]
 
     if command == 'push':
-        pass
+        num = input_value[1]
+        q.append(num)
 
     elif command == 'pop':
-        pass
+        if q:
+            num = q.pop()
+            print(num)
+        else:
+            print(-1)
 
     elif command == 'size':
-        pass
+        print(len(q))
 
     elif command == 'empty':
-        pass
+        if q:
+            print(0)
+        else:
+            print(1)
 
     elif command == 'top':
-        pass
-    
+        if q:
+            num = q[-1]
+            print(num)
+        else:
+            print(-1)
