@@ -1,25 +1,25 @@
 from collections import deque
 def snake_road():
-    visited = [[0]* N for _ in range(N)]
     q = deque()
     q.append((0,0)) # r, c, time
     di = [0, 1, 0, -1]
     dj = [1, 0, -1, 0]
-
+    
     turn_idx = time = 0
     i = j = 0
     while True:
+        
+
+        i, j = i + di[turn_idx], j + dj[turn_idx]  # 다음 갈 위치
+
+        time += 1
+        
+        
         # 종료 조건
-        if i < 0 or j < 0 or i >= N or j >= N or board[i][j] == 9:
+        if i < 0 or j < 0 or i >= N or j >= N or (i,j) in q:
             return time
-
-        # 사과 체크 후 꼬리 변경
-        if time >= 1:
-            if board[i][j] == 0:
-                a, b = q.popleft()
-                board[a][b] = 0
-
-        # 이동하기 전 시간 먼저 체크
+        
+        # 이동 후 시간 먼저 체크
         if time in turn_time:
             if turn_time[time] == 'L':  # 왼쪽이면
                 turn_idx -= 1
@@ -30,13 +30,22 @@ def snake_road():
                 turn_idx += 1
                 # if abs(turn_idx) >= 4:
                 #     turn_idx = turn_idx % 4
-            turn_idx = abs(turn_idx % 4)
+            turn_idx = turn_idx % 4
+
+        
+
+        # 사과 체크 후 꼬리 변경
+        # if time >= 1:
+        if board[i][j] == 0:
+            a, b = q.popleft()
+        else:
+            board[i][j] = 0
+
+        
 
         # 방문 체크
         q.append((i,j))
-        board[i][j] = 9
-        i, j = i + di[turn_idx], j + dj[turn_idx]  # 다음 갈 위치
-        time += 1
+        
 
 
 N = int(input()) # 보드 길이
