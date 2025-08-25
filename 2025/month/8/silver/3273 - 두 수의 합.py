@@ -20,5 +20,5 @@ for _ in range(n):
     elif num_lst[left] + num_lst[right] > x:
         right -= 1
 
-print(cnt)
+# print(cnt)
 
