@@ -1,34 +1,21 @@
 import sys
 
-sys.stdin = open("input.txt", 'r')
+# sys.stdin = open("input.txt", 'r')
 N = int(sys.stdin.readline())
-total_max_p = 0
-emp_lst = []
 
+time = []
+point = []
 for _ in range(N):
-    t, p = map(int,sys.stdin.readline().split())
-    emp_lst.append([t,p])
+    t,p = map(int,sys.stdin.readline().split())
+    time.append(t)
+    point.append(p)
 
-idx = 0
-#  앞에거 밀면서 가기
-while idx < N:
+dp = [0] * (N+1)
+
+for last in range(N-1,-1,-1):
+    if last + time[last] <= N:
+        dp[last] = max(dp[last+1], point[last] + dp[last+time[last]])
+    else:
+        dp[last] = dp[last+1]
     
-    total_p = 0
-    count = idx 
-
-    #  내부적으로 더하기
-    while True:
-        count += emp_lst[count][0]
-
-        if count > N:
-            break
-        total_p += emp_lst[count][1]  
-
-    if total_max_p < total_p:
-        total_max_p = total_p
-
-    idx += 1
-     
-print(total_max_p)
-    
-        
+print(max(dp))
