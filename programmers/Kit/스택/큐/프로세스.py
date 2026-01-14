@@ -12,3 +12,8 @@ def solution(priorities, location):
             answer += 1
             if idx == location:
                 return answer
+
+"""
+enumerate, any에 대한 부분
+큐를 어떻게 사용할건지 
+"""
